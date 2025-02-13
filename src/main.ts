@@ -1,6 +1,16 @@
-import { CastingResult } from './../node_modules/babylonjs/babylon.d';
-import { Engine, FreeCamera, HemisphericLight, Mesh, MeshBuilder, Scene, SceneLoader, Vector3 } from 'babylonjs';
-import './style.css'
+import { 
+  Engine, 
+  FreeCamera, 
+  HemisphericLight, 
+  Mesh, 
+  MeshBuilder, 
+  Scene, 
+  SceneLoader, 
+  Vector3
+} from 'babylonjs';
+import "babylonjs-loaders";
+import './style.css';
+
 
 // Get the canvas DOM element
 const canvas = document. getElementById(
@@ -29,13 +39,13 @@ const createScene = () => {
   // Create a basic light, aiming 0, 1, 0 - meaning, to the sky
   const light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
   // Create a built-in "sphere" shape using the SphereBuilder
-  const sphere = MeshBuilder.CreateSphere(
-    'sphere1', 
-    {segments: 16, diameter: 2, sideOrientation: Mesh.FRONTSIDE}, 
-    scene,
-  );
+  // const sphere = MeshBuilder.CreateSphere(
+  //   'sphere1', 
+  //   {segments: 16, diameter: 2, sideOrientation: Mesh.FRONTSIDE}, 
+  //   scene,
+  // );
   // Move the sphere upward 1/2 of its height
-  sphere.position.y = 1;
+  // sphere.position.y = 1;
 
   // Create a built-in "ground" shape;
   var ground = MeshBuilder.CreateGround(
@@ -45,8 +55,12 @@ const createScene = () => {
   );
 
   // Gaussian Splatting
-  SceneLoader.ImportMeshAsync('splat','./', 'clstesti.splat', scene).then((result) => {
-    result.meshes[0].position.y = 1.7;
+  SceneLoader.ImportMeshAsync('splat','./', 'leppakerttusiivottu.splat', scene).then((result) => {
+    const splat = result.meshes[0];
+    console.log(splat);
+    splat.position = new Vector3(0, 1, -2);
+    splat.rotation = new Vector3(0, 1.6, 0);
+    splat.scaling = new Vector3(1.5, 1.5, 1.5);
   });
   // Return the created scene
   return scene;

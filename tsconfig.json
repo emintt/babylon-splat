@@ -22,6 +22,7 @@
   },
   "types": [
     "babylonjs",
+    "babylonjs-loaders",
     "anotherAwesomeDependency"
   ],
   "include": ["src"]
