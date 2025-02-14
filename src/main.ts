@@ -1,14 +1,17 @@
 import { 
+  ArcRotateCamera,
   Engine, 
-  FreeCamera, 
   HemisphericLight, 
-  Mesh, 
   MeshBuilder, 
   Scene, 
   SceneLoader, 
+  StandardMaterial, 
+  Texture, 
+  Tools, 
   Vector3
 } from 'babylonjs';
 import "babylonjs-loaders";
+import "@babylonjs/loaders";
 import './style.css';
 
 
@@ -24,47 +27,58 @@ const engine = new Engine(canvas, true, {preserveDrawingBuffer: true, stencil: t
 const createScene = () => {
   // Create a basic BJS Scene object
   const scene = new Scene(engine);
-  // tähän ArcRoteCamera 004 vector 3 111
-  // sitten camera.attacControl(canvas, false)
-  // Create a FreeCamera, set name, and set its position 
-  const camera = new FreeCamera(
-    'camera1',
-    new Vector3(0, 5, -10),
-    scene
-  );
-  // Target the camera to scene origin
-  camera.setTarget(Vector3.Zero());
-  // Attach the camera to the canvas
-  camera.attachControl(canvas, false);
+  
+  var camera = new ArcRotateCamera(
+    "camera", 
+    Tools.ToRadians(90), 
+    Tools.ToRadians(65), 
+    10, 
+    Vector3.Zero(), 
+    scene);
+
+  // This attaches the camera to the canvas
+  camera.attachControl(canvas, true);
+
   // Create a basic light, aiming 0, 1, 0 - meaning, to the sky
-  const light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
-  // Create a built-in "sphere" shape using the SphereBuilder
-  // const sphere = MeshBuilder.CreateSphere(
-  //   'sphere1', 
-  //   {segments: 16, diameter: 2, sideOrientation: Mesh.FRONTSIDE}, 
-  //   scene,
-  // );
-  // Move the sphere upward 1/2 of its height
-  // sphere.position.y = 1;
+  new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
+
 
   // Create a built-in "ground" shape;
   var ground = MeshBuilder.CreateGround(
     "ground1", 
-    { width: 6, height: 6, subdivisions: 2, updatable: false }, 
+    { width: 12, height: 12, subdivisions: 2, updatable: false }, 
     scene,
+  );
+
+  // Create material and set material texture
+  const grassMaterial = new StandardMaterial("grassMaterial", scene);
+  grassMaterial.diffuseTexture = new Texture("./aerial_grass_rock_diff_1k.jpg", scene);
+
+  ground.material = grassMaterial;
+
+  SceneLoader.ImportMeshAsync('', './red_angry_bird_plush/', 'scene.gltf', scene).then(
+    (result) => {
+      const rose = result.meshes[0];
+      console.log(rose);
+      rose.position = new Vector3(0, 1.8, -0.3);
+      rose.scaling = new Vector3(5, 5, 5);
+      rose.rotation = new Vector3(0, Math.PI/1.5, 0);
+    },
   );
 
   // Gaussian Splatting
   SceneLoader.ImportMeshAsync('splat','./', 'leppakerttusiivottu.splat', scene).then((result) => {
     const splat = result.meshes[0];
     console.log(splat);
-    splat.position = new Vector3(0, 1, -2);
-    splat.rotation = new Vector3(0, 1.6, 0);
+    splat.position = new Vector3(0, 0, 0);
+    splat.rotation = new Vector3(0, -Math.PI/2, 0);
     splat.scaling = new Vector3(1.5, 1.5, 1.5);
   });
   // Return the created scene
   return scene;
 };
+
+
 
 // call the createScene function
 const scene = createScene();
@@ -72,6 +86,9 @@ const scene = createScene();
 engine.runRenderLoop(function(){
   scene.render();
 });
+
+
+
 // the canvas/window resize event handler
 window.addEventListener('resize', function(){
   engine.resize();

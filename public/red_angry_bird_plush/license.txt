@@ -1,0 +1,11 @@
+Model Information:
+* title:	Red Angry Bird Plush
+* source:	https://sketchfab.com/3d-models/red-angry-bird-plush-4d2516c56d11476d98f61011d5f370c3
+* author:	Aupuma (https://sketchfab.com/aupuma)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Red Angry Bird Plush" (https://sketchfab.com/3d-models/red-angry-bird-plush-4d2516c56d11476d98f61011d5f370c3) by Aupuma (https://sketchfab.com/aupuma) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
